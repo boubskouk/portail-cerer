@@ -1,0 +1,37 @@
+.drh-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.drh-page__kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+}
+
+.drh-row {
+  grid-template-columns: 150px minmax(140px, 1fr) 130px 80px 150px minmax(130px, 1fr) 120px 190px;
+  min-width: 1160px;
+}
+
+.solde-row {
+  grid-template-columns: minmax(140px, 1fr) minmax(120px, 1fr) 100px 130px 110px 220px;
+  min-width: 900px;
+}
+
+.solde-row__input {
+  width: 70px;
+}
+
+.drh-page__surplus-badge {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-orange-bg);
+  border: 1px solid var(--color-orange-border);
+  color: var(--color-orange-text);
+  font: 600 10.5px var(--font-body);
+  white-space: nowrap;
+}

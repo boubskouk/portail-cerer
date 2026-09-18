@@ -1,0 +1,235 @@
+.login-page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-blue-bg) 0%, var(--color-bg-app) 48%, var(--color-green-bg) 100%);
+}
+
+/* Filigrane décoratif — CERER à gauche, UCAD à droite, très pâle et flouté
+   pour rester un fond, jamais un élément à lire par-dessus (13/09/2026,
+   demande du commanditaire : "design léger éblouissant" mais tout le
+   contenu doit rester très lisible). */
+.login-page__watermark {
+  position: absolute;
+  width: 480px;
+  height: auto;
+  opacity: 0.07;
+  filter: blur(0.5px) saturate(1.3);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.login-page__watermark--cerer {
+  left: -90px;
+  bottom: -60px;
+}
+
+.login-page__watermark--ucad {
+  right: -90px;
+  top: 70px;
+}
+
+.login-page__header,
+.login-page__main {
+  position: relative;
+  z-index: 1;
+}
+
+.login-page__footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  font: 400 11.5px var(--font-body);
+  color: var(--color-text-muted);
+  padding: 0 20px 24px;
+}
+
+/* En-tête minimal — cette page est publique, accessible sans compte (voir
+   §"Comptes et accès"), même structure que DemandeAccesPage. Titre "Hub"
+   centré au milieu, logos + libellés (CERER/UCAD) de part et d'autre —
+   même traitement que l'en-tête de l'appli (voir components/layout/Header). */
+.login-page__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 0 22px;
+  height: var(--header-height);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.login-page__logo-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.login-page__logo {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+
+.login-page__logo-ucad {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+
+.login-page__logo-label {
+  font: 700 10px var(--font-body);
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.login-page__logo-label--cerer {
+  color: var(--color-blue-dark);
+}
+
+.login-page__logo-label--ucad {
+  color: var(--color-green-dark);
+}
+
+.login-page__brand {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.login-page__title {
+  font: 800 18px var(--font-display);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  background: linear-gradient(90deg, var(--color-blue) 0%, var(--color-green) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.login-page__title::after {
+  content: '';
+  display: block;
+  height: 2px;
+  width: 56px;
+  margin: 4px auto 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-blue) 0%, var(--color-green) 100%);
+}
+
+.login-page__subtitle {
+  font: 400 11px var(--font-body);
+  color: var(--color-text-tertiary);
+  line-height: 1.2;
+  margin-top: 3px;
+}
+
+@media (max-width: 700px) {
+  .login-page__header {
+    height: auto;
+    padding: 14px 16px;
+    row-gap: 10px;
+  }
+  .login-page__brand {
+    position: static;
+    transform: none;
+    order: 3;
+    width: 100%;
+  }
+}
+
+.login-page__main {
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-card__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login-card__h1 {
+  font: 600 22px var(--font-display);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.login-card__lead {
+  font: 400 13.5px/1.55 var(--font-body);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+.login-card__mdp-champ {
+  position: relative;
+  display: flex;
+}
+
+.login-card__mdp-champ input {
+  width: 100%;
+  padding-right: 38px;
+}
+
+.login-card__mdp-oeil {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.login-card__mdp-oeil:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-app);
+}
+
+.login-card__erreur {
+  font: 500 13px var(--font-body);
+  color: var(--color-red);
+}
+
+.login-card__submit {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.login-card__lien-acces {
+  text-align: center;
+  font: 400 12.5px var(--font-body);
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+}
+
+.login-card__lien-acces:hover {
+  text-decoration: underline;
+}

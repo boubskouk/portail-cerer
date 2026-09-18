@@ -1,0 +1,177 @@
+.stats-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stats-page__toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.stats-page__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .stats-page__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stats-page__bloc {
+  padding: 18px 20px;
+}
+
+.stats-page__bloc-titre {
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.stats-page__rapport-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.stats-page__rapport-champ {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12.5px;
+  color: var(--color-text-tertiary);
+}
+
+.stats-page__erreur {
+  color: var(--color-danger, #c0392b);
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.stats-page__barres {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stats-page__barre-ligne {
+  display: grid;
+  grid-template-columns: 140px 1fr 32px;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.stats-page__barre-label {
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stats-page__barre-piste {
+  height: 10px;
+  background: var(--track-bg);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.stats-page__barre-remplissage {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-blue) 0%, var(--color-green) 100%);
+  border-radius: var(--radius-pill);
+}
+
+.stats-page__barre-valeur {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.stats-type-row {
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.stats-page__legende {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.stats-page__legende-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stats-page__pastille {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.stats-page__pastille--conge {
+  background: var(--color-blue);
+}
+
+.stats-page__pastille--mission {
+  background: var(--color-green);
+}
+
+.stats-page__mois-grille {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 6px;
+  align-items: end;
+}
+
+/* Sous 480px, 12 colonnes fixes deviendraient illisibles (barres + libellé
+   de mois écrasés) — on leur donne une largeur minimale et on laisse le
+   graphique défiler horizontalement plutôt que de le comprimer. */
+@media (max-width: 480px) {
+  .stats-page__mois-grille {
+    grid-template-columns: repeat(12, minmax(30px, 1fr));
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+}
+
+.stats-page__mois-colonne {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.stats-page__mois-barres {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+}
+
+.stats-page__mois-barre {
+  width: 10px;
+  min-height: 2px;
+  border-radius: 3px 3px 0 0;
+}
+
+.stats-page__mois-barre--conge {
+  background: var(--color-blue);
+}
+
+.stats-page__mois-barre--mission {
+  background: var(--color-green);
+}
+
+.stats-page__mois-label {
+  font-size: 10.5px;
+  color: var(--color-text-tertiary);
+}

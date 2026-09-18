@@ -1,0 +1,128 @@
+.app-sidebar {
+  width: var(--sidebar-width);
+  padding: 20px 14px 30px;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  min-height: calc(100vh - var(--header-height));
+  position: sticky;
+  top: var(--header-height);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.app-sidebar__group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.app-sidebar__group-title {
+  font: 600 10.5px var(--font-body);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 0 10px 8px;
+}
+
+.app-sidebar__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  padding: 9px 10px;
+  border-radius: var(--radius-field);
+  font: 500 13.5px var(--font-body);
+  color: #4a525b;
+  background: transparent;
+  box-shadow: none;
+}
+
+.app-sidebar__item:hover {
+  text-decoration: none;
+  background: var(--color-surface-secondary);
+}
+
+.app-sidebar__item.is-active {
+  font-weight: 600;
+  color: var(--color-blue-darker);
+  background: var(--color-blue-bg);
+  box-shadow: inset 2px 0 0 var(--color-blue);
+}
+
+.app-sidebar__item.is-active:hover {
+  background: var(--color-blue-bg);
+}
+
+.app-sidebar__badge {
+  background: var(--color-orange-bg);
+  color: var(--color-orange-text);
+  font: 600 11px var(--font-body);
+  border-radius: var(--radius-pill);
+  padding: 1px 7px;
+}
+
+.app-sidebar__spacer {
+  flex: 1;
+}
+
+.app-sidebar__mobile-head {
+  display: none;
+}
+
+/* Tiroir plein écran sous 900px : la sidebar sort du flux (position: fixed)
+   et glisse depuis la gauche via `transform` plutôt que `left`, pour une
+   animation fluide sans repaint de layout. Fermeture : backdrop (AppShell),
+   bouton × (app-sidebar__mobile-head) ou clic sur un lien (Sidebar.tsx). */
+@media (max-width: 900px) {
+  .app-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(82vw, 300px);
+    height: 100vh;
+    z-index: 40;
+    transform: translateX(-100%);
+    transition: transform 0.22s ease;
+    box-shadow: 2px 0 20px rgba(15, 23, 27, 0.18);
+    padding: 16px 14px 24px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .app-sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .app-sidebar__mobile-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 6px 12px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid var(--color-border);
+    font: 600 13px var(--font-body);
+    color: var(--color-text-tertiary);
+  }
+
+  .app-sidebar__close {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: var(--color-surface-secondary);
+    border-radius: 50%;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--color-text-secondary);
+    display: grid;
+    place-items: center;
+  }
+
+  .app-sidebar__item {
+    padding: 11px 10px;
+    font-size: 14.5px;
+  }
+}

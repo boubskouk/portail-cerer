@@ -1,0 +1,175 @@
+.absences-page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.absences-page__toolbar {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.absences-page__mois {
+  font: 700 17px var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.absences-page__sous {
+  margin-top: 3px;
+  font: 400 12px/1.5 var(--font-body);
+  color: var(--color-text-tertiary);
+  max-width: 46ch;
+}
+
+.absences-page__legende {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 2px;
+}
+
+.absences-page__legende-item {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font: 700 11px var(--font-body);
+}
+
+.absences-page__card {
+  padding: 18px;
+}
+
+.absences-page__scroll {
+  overflow-x: auto;
+  min-width: 640px;
+}
+
+.absences-grid {
+  display: grid;
+  gap: 4px;
+  align-items: center;
+}
+
+.absences-grid--head {
+  padding-bottom: 8px;
+  margin-bottom: 4px;
+  border-bottom: 2px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  background: var(--color-surface);
+  z-index: 1;
+}
+
+.absences-grid--row {
+  padding: 3px 0;
+  border-radius: 8px;
+}
+
+.absences-grid--row:hover {
+  background: var(--color-surface-tertiary);
+}
+
+.absences-grid__day {
+  text-align: center;
+  font: 700 11.5px var(--font-body);
+  color: var(--color-text-muted-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.3;
+  border-radius: 6px;
+  cursor: default;
+}
+
+.absences-grid__day-wd {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.absences-grid__day.is-weekend {
+  color: var(--color-text-tertiary);
+}
+
+.absences-grid__day.is-today {
+  background: var(--color-blue-bg);
+  border-radius: 8px;
+}
+
+.absences-grid__day.is-today .absences-grid__day-num {
+  color: var(--color-blue-dark);
+}
+
+.absences-grid__cell.is-today {
+  box-shadow: inset 0 0 0 2px var(--color-blue-dark);
+}
+
+.absences-grid__nom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 600 12.5px var(--font-body);
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+}
+
+/* Colonne "agent" figée pendant le défilement horizontal — sur mobile, la
+   grille peut atteindre 900px+ de large (jusqu'à 31 colonnes de jour) ; sans
+   ça, on perd de vue à qui appartient la ligne dès qu'on scrolle. */
+.absences-grid__corner,
+.absences-grid__nom {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--color-surface);
+  box-shadow: 1px 0 0 var(--color-border-soft);
+}
+
+.absences-grid--row:hover .absences-grid__nom {
+  background: var(--color-surface-tertiary);
+}
+
+.absences-grid__avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex: none;
+  display: grid;
+  place-items: center;
+  font: 700 10px var(--font-body);
+  color: #fff;
+}
+
+.absences-grid__avatar.is-blue {
+  background: var(--color-blue);
+}
+
+.absences-grid__avatar.is-green {
+  background: var(--color-green);
+}
+
+.absences-grid__cell {
+  height: 28px;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  display: grid;
+  place-items: center;
+  font: 800 8.5px var(--font-body);
+  letter-spacing: 0.01em;
+  transition: transform 0.08s ease;
+}
+
+.absences-grid__cell:hover {
+  transform: scale(1.12);
+  cursor: default;
+}

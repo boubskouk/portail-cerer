@@ -1,0 +1,240 @@
+.app-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 22px;
+  height: var(--header-height);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.app-header__side {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.app-header__side--right {
+  justify-content: flex-end;
+}
+
+.app-header__menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+}
+
+.app-header__menu-btn:hover {
+  background: var(--color-surface-secondary);
+}
+
+.app-header__menu-icon,
+.app-header__menu-icon::before,
+.app-header__menu-icon::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-text);
+}
+
+.app-header__menu-icon {
+  position: relative;
+}
+
+.app-header__menu-icon::before,
+.app-header__menu-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+.app-header__menu-icon::before {
+  top: -6px;
+}
+
+.app-header__menu-icon::after {
+  top: 6px;
+}
+
+.app-header__logo-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.app-header__logo-cerer {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+
+.app-header__logo-ucad {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+
+.app-header__logo-label {
+  font: 700 10px var(--font-body);
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.app-header__logo-label--cerer {
+  color: var(--color-blue-dark);
+}
+
+.app-header__logo-label--ucad {
+  color: var(--color-green-dark);
+}
+
+/* Titre centré au vrai milieu de l'en-tête, indépendamment de l'asymétrie
+   entre le groupe de logos (gauche) et l'identité/déconnexion (droite) —
+   un simple `justify-content: space-between` ne suffirait pas puisque les
+   deux côtés n'ont pas la même largeur. */
+.app-header__hub {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.app-header__hub-title {
+  font: 800 18px var(--font-display);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  background: linear-gradient(90deg, var(--color-blue) 0%, var(--color-green) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.app-header__hub-title::after {
+  content: '';
+  display: block;
+  height: 2px;
+  width: 56px;
+  margin: 4px auto 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-blue) 0%, var(--color-green) 100%);
+}
+
+.app-header__subtitle {
+  font: 400 11px var(--font-body);
+  color: var(--color-text-tertiary);
+  line-height: 1.2;
+  margin-top: 3px;
+}
+
+.app-header__identity {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.app-header__identity-text {
+  text-align: right;
+  line-height: 1.15;
+}
+
+.app-header__name {
+  font: 600 13px var(--font-body);
+}
+
+.app-header__role {
+  font: 400 11.5px var(--font-body);
+  color: var(--color-text-tertiary);
+}
+
+.app-header__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--color-blue);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font: 600 12.5px var(--font-body);
+  flex-shrink: 0;
+}
+
+.app-header__logout {
+  font: 500 12px var(--font-body);
+  color: var(--color-text-tertiary);
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 7px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.app-header__logout:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-tertiary);
+}
+
+.app-header__divider {
+  width: 1px;
+  height: 28px;
+  background: var(--color-border);
+  flex-shrink: 0;
+}
+
+/* En dessous d'une certaine largeur, le titre centré en position absolue
+   risquerait de chevaucher les logos/l'identité (côtés de largeurs très
+   différentes) — on repasse en flux normal, empilé, plutôt que de casser
+   la mise en page. */
+@media (max-width: 900px) {
+  .app-header {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 10px 16px;
+    row-gap: 10px;
+  }
+  .app-header__hub {
+    position: static;
+    transform: none;
+    order: 3;
+    width: 100%;
+  }
+  .app-header__side {
+    flex: 0 1 auto;
+  }
+  .app-header__menu-btn {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header__identity-text {
+    display: none;
+  }
+  .app-header__logout {
+    padding: 7px 9px;
+  }
+  .app-header__divider {
+    display: none;
+  }
+}

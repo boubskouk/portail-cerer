@@ -1,0 +1,32 @@
+.auth-status {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px 20px;
+  text-align: center;
+  font: 400 14.5px/1.6 var(--font-body);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-app);
+}
+
+.auth-status p {
+  margin: 0;
+  max-width: 46ch;
+}
+
+.auth-status__deconnexion {
+  font: 600 13px var(--font-body);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 9px 16px;
+  cursor: pointer;
+}
+
+.auth-status__deconnexion:hover {
+  border-color: var(--color-text-tertiary);
+}

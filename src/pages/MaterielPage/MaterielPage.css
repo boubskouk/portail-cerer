@@ -1,0 +1,307 @@
+.materiel-page {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+.materiel-page__liste {
+  padding: 0;
+}
+
+.materiel-page__liste-titre {
+  padding: 15px 18px;
+  border-bottom: 1px solid var(--color-border-soft);
+  font: 600 15px var(--font-display);
+}
+
+.materiel-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--color-border-soft-2);
+}
+
+.materiel-row:last-child {
+  border-bottom: none;
+}
+
+.materiel-row__texte {
+  min-width: 0;
+  flex: 1;
+}
+
+.materiel-row__article {
+  font: 500 13.5px var(--font-body);
+  margin-bottom: 2px;
+}
+
+.materiel-row__meta {
+  font: 400 11.5px var(--font-body);
+  color: var(--color-text-tertiary);
+}
+
+/* Carte « Nouvelle demande » — refondue le 15/09/2026 (demande du
+   commanditaire : « design plus élégant ») : chaque article devient une
+   petite fiche numérotée plutôt qu'une ligne de tableau brute, la
+   catégorie se déduit automatiquement de l'article choisi au catalogue
+   (voir `choisirArticle` dans MaterielPage.tsx) et la quantité se règle
+   au compteur +/- plutôt qu'en tapant un nombre. */
+
+.materiel-form-card {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.materiel-form-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-blue), var(--color-green));
+}
+
+.materiel-form__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 20px 0;
+}
+
+.materiel-form__titre {
+  font: 600 15px var(--font-display);
+  margin-bottom: 4px;
+}
+
+.materiel-form__sous {
+  font: 400 12.5px/1.5 var(--font-body);
+  color: var(--color-text-tertiary);
+  max-width: 420px;
+}
+
+.materiel-form__count {
+  flex: none;
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  background: var(--color-blue-bg);
+  color: var(--color-blue-dark);
+  font: 600 11.5px var(--font-body);
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+.materiel-form__body {
+  padding: 16px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.materiel-form__lignes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.materiel-form__ligne {
+  border: 1px solid var(--color-border-soft);
+  background: var(--color-surface-tertiary);
+  border-radius: var(--radius-card-sm);
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.materiel-form__ligne:focus-within {
+  border-color: var(--color-blue-border);
+  background: var(--color-surface);
+}
+
+.materiel-form__ligne-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.materiel-form__badge {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-blue-bg);
+  color: var(--color-blue-dark);
+  font: 700 11.5px var(--font-display);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.materiel-form__ligne-retirer {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  font: 600 16px var(--font-body);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.materiel-form__ligne-retirer:hover:not(:disabled) {
+  background: var(--color-red-bg);
+  color: var(--color-red);
+}
+
+.materiel-form__ligne-retirer:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.materiel-form__autre {
+  margin-top: 8px;
+}
+
+.materiel-form__ligne-meta {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.materiel-form__meta-label {
+  display: block;
+  font: 500 10.5px var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-tertiary);
+  margin-bottom: 5px;
+}
+
+.materiel-form__categorie-tag,
+.materiel-form__categorie-select {
+  display: flex;
+  flex-direction: column;
+}
+
+.materiel-form__categorie-select select {
+  padding: 8px 10px;
+  border: 1px solid var(--color-border-field);
+  border-radius: var(--radius-field);
+  font: 400 13px var(--font-body);
+  background: var(--color-surface);
+}
+
+.materiel-form__tag {
+  display: inline-block;
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  background: var(--color-green-bg);
+  color: var(--color-green-darker);
+  border: 1px solid var(--color-green-border);
+  font: 600 12px var(--font-body);
+  white-space: nowrap;
+}
+
+.materiel-form__stepper-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.materiel-form__stepper {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--color-border-field);
+  border-radius: var(--radius-field);
+  overflow: hidden;
+  height: 36px;
+  background: var(--color-surface);
+}
+
+.materiel-form__stepper button {
+  width: 32px;
+  border: none;
+  background: var(--color-surface-secondary);
+  color: var(--color-text-secondary);
+  font: 600 16px var(--font-body);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.materiel-form__stepper button:hover {
+  background: var(--color-blue-bg);
+  color: var(--color-blue-dark);
+}
+
+.materiel-form__stepper input {
+  width: 42px;
+  border: none;
+  border-left: 1px solid var(--color-border-field);
+  border-right: 1px solid var(--color-border-field);
+  text-align: center;
+  font: 600 13.5px var(--font-body);
+  background: transparent;
+  color: var(--color-text);
+}
+
+.materiel-form__stepper input:focus {
+  outline: none;
+}
+
+.materiel-form__ajouter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px;
+  border: 1.5px dashed var(--color-border-field);
+  border-radius: var(--radius-field);
+  background: var(--color-surface-tertiary);
+  color: var(--color-text-secondary);
+  font: 600 13px var(--font-body);
+}
+
+.materiel-form__ajouter:hover {
+  border-color: var(--color-blue);
+  color: var(--color-blue-dark);
+  background: var(--color-blue-bg);
+}
+
+.materiel-form__submit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.materiel-form__submit-note {
+  font: 400 12px var(--font-body);
+  color: var(--color-text-tertiary);
+}
+
+@media (max-width: 480px) {
+  .materiel-form__ligne-meta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.materiel-page__traiter {
+  grid-column: 1 / -1;
+}
+
+.materiel-traiter-row {
+  grid-template-columns: 150px 160px minmax(140px, 1fr) 60px minmax(160px, 1fr) 100px 150px;
+  min-width: 1100px;
+}

@@ -1,0 +1,84 @@
+.annuaire-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.annuaire-page__filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.annuaire-page__filters input,
+.annuaire-page__filters select {
+  padding: 11px 14px;
+  border: 1px solid var(--color-border-field);
+  border-radius: var(--radius-btn);
+  font: 400 14px var(--font-body);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.annuaire-page__filters input {
+  flex: 1;
+  min-width: 220px;
+}
+
+.annuaire-page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(258px, 1fr));
+  gap: 13px;
+}
+
+.annuaire-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 13px;
+  padding: 17px;
+  display: flex;
+  gap: 13px;
+}
+
+.annuaire-card:hover {
+  border-color: var(--color-green);
+}
+
+.annuaire-card__avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-card-sm);
+  flex: none;
+  display: grid;
+  place-items: center;
+  font: 600 13px var(--font-body);
+  color: #fff;
+}
+
+.annuaire-card__avatar.is-blue {
+  background: var(--color-blue);
+}
+
+.annuaire-card__avatar.is-green {
+  background: var(--color-green-dark);
+}
+
+.annuaire-card__body {
+  min-width: 0;
+}
+
+.annuaire-card__nom {
+  font: 600 14px var(--font-body);
+  margin-bottom: 2px;
+}
+
+.annuaire-card__poste {
+  font: 400 12.5px var(--font-body);
+  color: var(--color-text-secondary);
+  margin-bottom: 7px;
+}
+
+.annuaire-card__meta {
+  font: 400 11.5px/1.6 var(--font-body);
+  color: var(--color-text-tertiary);
+}

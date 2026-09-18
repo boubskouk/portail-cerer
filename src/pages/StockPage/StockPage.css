@@ -1,0 +1,127 @@
+.stock-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stock-page__toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.stock-page__form-titre {
+  font-weight: 600;
+}
+
+.stock-page__form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.stock-page__import-resultat {
+  border-radius: var(--radius-card-sm);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 13px;
+}
+
+.stock-page__import-titre {
+  white-space: pre-line;
+  font-weight: 500;
+}
+
+.stock-page__import-details {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+.stock-page__import-details li {
+  margin-bottom: 2px;
+}
+
+.stock-page__import-resultat--succes {
+  background: var(--color-green-bg);
+  color: var(--color-green-darker);
+  border: 1px solid var(--color-green-border);
+}
+
+.stock-page__import-resultat--avertissement {
+  background: var(--color-orange-bg);
+  color: var(--color-orange-text);
+  border: 1px solid var(--color-orange-border);
+}
+
+.stock-page__import-resultat--erreur {
+  background: var(--color-red-bg);
+  color: var(--color-red);
+  border: 1px solid var(--color-red-border);
+}
+
+.stock-page__form-submit {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.stock-page__erreur {
+  color: var(--color-danger, #c0392b);
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.stock-page__succes {
+  color: var(--color-success, #1e8e5a);
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.stock-page__ajout-article {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px dashed var(--color-border, #d8dde3);
+  border-radius: 8px;
+}
+
+.stock-page__ajout-article-titre {
+  font-weight: 500;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.stock-page__ajout-article-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.stock-page__periode {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.stock-etat-row,
+.stock-livraison-row {
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+}
+
+.stock-etat-row--action {
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 210px;
+  min-width: 1000px;
+}
+
+.stock-livraison-row {
+  grid-template-columns: 1fr 2fr 1fr 2fr 1fr;
+}
+
+.stock-etat-row__rupture {
+  color: var(--color-danger, #c0392b);
+}

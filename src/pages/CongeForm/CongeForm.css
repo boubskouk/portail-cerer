@@ -1,0 +1,505 @@
+.conge-demandeur__valeur {
+  font: 400 14px var(--font-body);
+  color: var(--color-text);
+  padding: 10px 0 2px;
+}
+
+.conge-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 960px;
+}
+
+.conge-form__variant-bar {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  flex-wrap: wrap;
+  border-radius: var(--radius-card-sm);
+  padding: 11px 14px;
+}
+
+.conge-form__variant-note {
+  font: 400 12.5px var(--font-body);
+  color: var(--color-text-tertiary);
+}
+
+/* Bandeau référence / date de dépôt */
+
+.conge-form__ref-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  background: var(--color-blue-dark);
+  border-radius: var(--radius-card);
+  padding: 19px 22px;
+  color: #fff;
+}
+
+.conge-form__ref-label {
+  font: 500 11px var(--font-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.72;
+  margin-bottom: 5px;
+}
+
+.conge-form__ref-value {
+  font: 600 21px var(--font-display);
+}
+
+.conge-form__ref-date {
+  text-align: right;
+}
+
+/* Sous 480px, le bandeau (référence / date / bouton) empile ses trois blocs
+   en pleine largeur — l'alignement à droite de la date devient à gauche
+   pour rester lisible une fois qu'il n'y a plus de colonne "de droite". */
+@media (max-width: 480px) {
+  .conge-form__ref-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .conge-form__ref-date {
+    text-align: left;
+  }
+
+  .conge-form__voir-conges {
+    align-self: flex-start;
+  }
+}
+
+/* Frise d'étapes (variante B) */
+
+.conge-form__etapes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.step-pill {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 14px;
+  border-radius: var(--radius-btn);
+  font: 500 13px var(--font-body);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted-2);
+}
+
+.step-pill.is-active {
+  font-weight: 600;
+  color: var(--color-blue-darker);
+  background: var(--color-blue-bg);
+  border-color: var(--color-blue-border);
+}
+
+.step-pill.is-done {
+  color: var(--color-green-darker);
+  background: var(--color-green-bg);
+  border-color: var(--color-green-border);
+}
+
+.step-pill__num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font: 600 11px var(--font-body);
+  color: #fff;
+  background: #c4cad1;
+}
+
+.step-pill.is-active .step-pill__num {
+  background: var(--color-blue-dark);
+}
+
+.step-pill.is-done .step-pill__num {
+  background: var(--color-green-dark);
+}
+
+/* Section de formulaire */
+
+.conge-section {
+  padding: 0;
+  overflow: hidden;
+}
+
+.conge-section__header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.conge-section__badge {
+  width: 23px;
+  height: 23px;
+  border-radius: var(--radius-badge);
+  background: var(--color-blue-bg);
+  color: var(--color-blue-dark);
+  display: grid;
+  place-items: center;
+  font: 600 12px var(--font-body);
+}
+
+.conge-section__title {
+  font: 600 15px var(--font-display);
+}
+
+.conge-section__body {
+  padding: 20px;
+}
+
+
+/* Section 2 — cartes de type de congé */
+
+.conge-types {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+  gap: 10px;
+}
+
+.type-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 14px;
+  border-radius: var(--radius-card-sm);
+  cursor: pointer;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.type-card.is-active {
+  background: var(--color-green-bg-2);
+  border-color: var(--color-green);
+}
+
+.type-card__dot {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  flex: none;
+  margin-top: 1px;
+  border: 2px solid #c4cad1;
+  background: #fff;
+}
+
+.type-card.is-active .type-card__dot {
+  border-color: var(--color-green-dark);
+  background: var(--color-green-dark);
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.type-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.type-card__label {
+  font: 600 13.5px var(--font-body);
+  color: var(--color-text);
+}
+
+.type-card__sous {
+  font: 400 11.5px var(--font-body);
+  color: var(--color-text-tertiary);
+}
+
+/* Section 3 — congé annuel : solde + fractions */
+
+.conge-annuel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.solde-box {
+  background: var(--color-bg-app);
+  border: 1px solid #e9eae5;
+  border-radius: var(--radius-card-sm);
+  padding: 16px;
+}
+
+.solde-box__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.solde-box__title {
+  font: 600 13px var(--font-body);
+}
+
+.solde-box__count {
+  font: 600 12.5px var(--font-body);
+  color: var(--color-text-secondary);
+}
+
+.solde-box__count.is-warn {
+  color: var(--color-orange-text);
+}
+
+.solde-box__count.is-over {
+  color: var(--color-red);
+}
+
+.solde-box__track {
+  height: 10px;
+  background: var(--track-bg-2);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  display: flex;
+}
+
+.solde-box__used {
+  background: var(--color-blue-dark);
+}
+
+.solde-box__req {
+  background: var(--color-green);
+}
+
+.solde-box__req.is-over {
+  background: var(--color-red);
+}
+
+.solde-box__legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 9px;
+  flex-wrap: wrap;
+}
+
+.solde-box__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 400 11.5px var(--font-body);
+  color: var(--color-text-tertiary);
+}
+
+.solde-box__swatch {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+}
+
+.solde-box__swatch--used {
+  background: var(--color-blue-dark);
+}
+
+.solde-box__swatch--req {
+  background: var(--color-green);
+}
+
+.solde-box__alert {
+  margin-top: 12px;
+  background: var(--color-orange-bg);
+  border: 1px solid var(--color-orange-border);
+  border-radius: var(--radius-field);
+  padding: 10px 12px;
+  font: 500 12.5px/1.45 var(--font-body);
+  color: var(--color-orange-text);
+}
+
+.solde-box__defalque {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font: 500 13px var(--font-body);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.solde-box__defalque-note {
+  margin-top: 4px;
+  font: 400 11.5px/1.4 var(--font-body);
+  color: var(--color-text-tertiary);
+}
+
+.fractions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fraction-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  border: 1px solid #e9eae5;
+  border-radius: var(--radius-btn);
+  padding: 11px 13px;
+}
+
+.fraction-row__index {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-badge);
+  background: var(--color-green-bg);
+  color: var(--color-green-darker);
+  display: grid;
+  place-items: center;
+  font: 600 11.5px var(--font-body);
+}
+
+.fraction-row__dates {
+  font: 500 13.5px var(--font-body);
+}
+
+.fraction-row__jours {
+  font: 400 13px var(--font-body);
+  color: var(--color-text-tertiary);
+}
+
+.fraction-row__remove {
+  border: 1px solid #e9eae5;
+  background: var(--color-surface);
+  color: var(--color-text-muted-2);
+  font: 500 12px var(--font-body);
+  padding: 5px 11px;
+  border-radius: var(--radius-btn-sm);
+}
+
+.fraction-row__remove:hover {
+  border-color: var(--color-green-border-soft);
+  color: var(--color-red);
+}
+
+.fraction-add {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  align-items: end;
+  border: 1px dashed var(--color-border-dashed);
+  border-radius: var(--radius-btn);
+  padding: 14px 13px;
+}
+
+.fraction-add .field input {
+  padding: 9px 11px;
+  font-size: 13.5px;
+}
+
+.fraction-add .field__label {
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+/* Section 3 — types non annuels : bandeau maladie */
+
+.maladie-banner {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  background: var(--color-orange-bg);
+  border: 1px solid var(--color-orange-border);
+  border-radius: var(--radius-btn);
+  padding: 13px 14px;
+}
+
+.maladie-banner__check {
+  width: 19px;
+  height: 19px;
+  border-radius: 5px;
+  border: 2px solid var(--color-orange);
+  background: #fff;
+  flex: none;
+}
+
+.maladie-banner__check.is-checked {
+  background: var(--color-orange);
+}
+
+.maladie-banner__text {
+  font: 500 13px/1.45 var(--font-body);
+  color: var(--color-orange-text);
+}
+
+/* Section 4 — remplacement */
+
+.conge-remplacement {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.conge-remplacement__toggle {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Barre de soumission */
+
+.conge-submit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+}
+
+.conge-submit__note {
+  font: 400 12.5px/1.5 var(--font-body);
+  color: var(--color-text-tertiary);
+  max-width: 420px;
+}
+
+/* Écran de confirmation */
+
+.conge-confirm {
+  padding: 44px 34px;
+  text-align: center;
+}
+
+.conge-confirm__disc {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-green-bg);
+  border: 2px solid var(--color-green);
+  margin: 0 auto 18px;
+}
+
+.conge-confirm__title {
+  font: 600 22px var(--font-display);
+  letter-spacing: -0.02em;
+  margin-bottom: 9px;
+}
+
+.conge-confirm__text {
+  font: 400 14.5px/1.6 var(--font-body);
+  color: var(--color-text-secondary);
+  max-width: 440px;
+  margin: 0 auto 18px;
+}
+
+.conge-confirm__ref {
+  display: inline-block;
+  background: var(--color-surface-secondary);
+  border: 1px dashed #c9ccc4;
+  border-radius: var(--radius-field);
+  padding: 10px 18px;
+  font: 600 15px var(--font-body);
+  margin-bottom: 22px;
+}

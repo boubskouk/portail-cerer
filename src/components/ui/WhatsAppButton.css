@@ -1,0 +1,56 @@
+/* Bouton flottant WhatsApp — en bas à GAUCHE (15/09/2026, demande du
+   commanditaire : à droite, il cachait des éléments d'écran) ; la marge de
+   22px le tient à l'écart du bord, et son z-index (40) reste sous un
+   éventuel futur modal. Passé de rond à pilule avec le libellé
+   "Assistance" à gauche de l'icône, pour que le bouton se comprenne sans
+   avoir à deviner ce que fait un simple rond vert. */
+
+.whatsapp-fab {
+  position: fixed;
+  left: 22px;
+  bottom: 22px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 50px;
+  padding: 0 18px 0 20px;
+  border-radius: var(--radius-pill, 999px);
+  background: #25d366;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(18, 71, 52, 0.28);
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.whatsapp-fab__label {
+  font: 600 13.5px var(--font-body, sans-serif);
+  white-space: nowrap;
+}
+
+.whatsapp-fab:hover {
+  background: #1fb959;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(18, 71, 52, 0.34);
+  text-decoration: none;
+}
+
+.whatsapp-fab:focus-visible {
+  outline: 2px solid var(--color-blue, #1a6fb4);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .whatsapp-fab {
+    left: 14px;
+    bottom: 14px;
+    height: 46px;
+    padding: 0 14px;
+    gap: 7px;
+  }
+  /* Sur très petit écran, on revient à l'icône seule pour ne pas manger
+     de largeur près du bord (même exigence qu'à la création du bouton :
+     ne jamais gêner un élément visible de l'app). */
+  .whatsapp-fab__label {
+    display: none;
+  }
+}

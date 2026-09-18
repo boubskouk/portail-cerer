@@ -1,0 +1,133 @@
+/* Jetons de design — Portail CERER
+   Valeurs reprises telles quelles du handoff design (§10 du README) et du
+   prototype `Portail CERER.dc.html`. Ne pas modifier sans validation du
+   commanditaire : ces couleurs, tailles et rayons sont définitifs (hifi). */
+
+:root {
+  /* Couleurs — surfaces */
+  --color-bg-app: #f6f6f3;
+  --color-surface: #ffffff;
+  --color-surface-secondary: #f2f3ef;
+  --color-surface-tertiary: #fafaf8;
+
+  /* Couleurs — bordures */
+  --color-border: #e3e5e0;
+  --color-border-soft: #eff0ec;
+  --color-border-soft-2: #f3f4f0;
+  --color-border-field: #dcdfd8;
+  --color-border-dashed: #d3d6ce;
+
+  /* Couleurs — texte */
+  --color-text: #14181b;
+  --color-text-secondary: #5c6570;
+  --color-text-tertiary: #7a828c;
+  --color-text-muted: #a0a7ae;
+  --color-text-muted-2: #8a9098;
+
+  /* Couleurs — bleu CERER */
+  --color-blue: #1a6fb4;
+  --color-blue-dark: #12558b;
+  --color-blue-darker: #0f3f68;
+  --color-blue-bg: #e8f1f9;
+  --color-blue-border: #c9ddf0;
+
+  /* Couleurs — vert CERER */
+  --color-green: #7ab93f;
+  --color-green-dark: #5e9a2a;
+  --color-green-darker: #4e8420;
+  --color-green-bg: #eef6e4;
+  --color-green-bg-2: #f1f7ea;
+  --color-green-border: #c9e2ac;
+  --color-green-border-soft: #d6a5a0;
+
+  /* Couleurs — orange (accent, obligatoire, alerte) */
+  --color-orange: #c55a11;
+  --color-orange-text: #a8480b;
+  --color-orange-bg: #fdf0e3;
+  --color-orange-border: #f0d5b4;
+  --color-orange-border-strong: #e3c49f;
+
+  /* Couleurs — rouge (erreur, refus) */
+  --color-red: #b3261e;
+  --color-red-bg: #fbf3f2;
+  --color-red-border: #e9dad8;
+
+  /* Pistes de barre de progression */
+  --track-bg: #edeee9;
+  --track-bg-2: #e4e6e0;
+
+  /* Typographie */
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Public Sans', system-ui, sans-serif;
+
+  /* Rayons */
+  --radius-badge: 6px;
+  --radius-tab: 7px;
+  --radius-btn-sm: 8px;
+  --radius-field: 9px;
+  --radius-btn: 10px;
+  --radius-card-sm: 11px;
+  --radius-card: 14px;
+  --radius-pill: 20px;
+
+  /* Ombre — la seule du système, réservée à l'onglet actif d'un sélecteur segmenté */
+  --shadow-tab: 0 1px 2px rgba(0, 0, 0, 0.07);
+
+  /* Coquille d'application */
+  --header-height: 66px;
+  --sidebar-width: 246px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-bg-app);
+  font-family: var(--font-body);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--color-blue);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--color-blue-dark);
+  text-decoration: underline;
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: var(--font-body);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-blue);
+}
+
+::placeholder {
+  color: #a9afb6;
+}
+
+button {
+  cursor: pointer;
+}
+
+#root {
+  min-height: 100vh;
+}

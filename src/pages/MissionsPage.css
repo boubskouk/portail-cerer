@@ -1,0 +1,27 @@
+.missions-page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.missions-page__form {
+  padding: 0;
+}
+
+.missions-page__form-titre {
+  font: 600 15px var(--font-display);
+  padding: 20px 20px 0;
+  margin-bottom: 14px;
+}
+
+.missions-page__form-body {
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.missions-row {
+  grid-template-columns: 150px minmax(140px, 1fr) minmax(150px, 1fr) 150px 70px minmax(120px, 1fr) 120px 190px;
+  min-width: 1220px;
+}
