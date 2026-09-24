@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import type { EmailOtpType } from '@supabase/supabase-js';
 import { Field } from '../components/ui/Field';
 import { WhatsAppButton } from '../components/ui/WhatsAppButton';
 import { supabase } from '../lib/supabase';
@@ -10,18 +11,36 @@ import { APP_VERSION } from '../data/version';
 import './LoginPage.css';
 
 // Page publique, destination du lien d'activation envoyé après approbation
-// d'une demande d'accès (voir ComptesPage -> fonction serveur
-// approuver-demande-acces, qui génère ce lien avec redirect_to = ici).
+// d'une demande d'accès (voir ComptesPage -> fonctions serveur
+// approuver-demande-acces / renvoyer-lien-activation, qui génèrent ce lien
+// avec redirect_to = ici).
 //
-// Le client Supabase consomme automatiquement le fragment d'URL
-// (#access_token=...) au chargement de la page (detectSessionInUrl, activé
-// par défaut) : une session est donc déjà active quand ce composant monte,
-// sans action de notre part — on vérifie juste qu'elle est bien là avant de
-// proposer de choisir un mot de passe.
+// 21/09/2026 : les liens envoyés par email étaient consommés avant que
+// l'agent ne clique dessus (erreur "lien invalide ou expiré" quasi
+// systématique — confirmé par les logs Supabase : plusieurs adresses IP
+// différentes tapent /verify dans les secondes suivant l'envoi). Cause
+// connue de Supabase : les scanners de sécurité des messageries
+// d'entreprise (ex. Safe Links de Microsoft Defender, utilisé par
+// @ucad.edu.sn) suivent automatiquement les liens des emails pour les
+// analyser — comme un lien Supabase est à usage unique, ce simple passage
+// du scanner le grille avant l'ouverture réelle par l'agent.
+//
+// Correctif (solution officielle Supabase, cf. doc "Email prefetching") :
+// le lien n'appelle plus directement /auth/v1/verify (qui consomme le jeton
+// au premier GET, scanner ou pas). Il pointe désormais vers CETTE page avec
+// ?token_hash=...&type=..., et ce n'est qu'au clic explicite de l'agent sur
+// le bouton ci-dessous qu'on appelle verifyOtp() — un scanner qui se
+// contente de charger la page HTML ne déclenche pas ce clic, donc ne grille
+// plus le jeton. Reste géré en secours l'ancien format de lien
+// (#access_token=... dans le fragment, consommé automatiquement par
+// detectSessionInUrl) au cas où un lien généré avant ce correctif traîne
+// encore dans une boîte mail.
 export function SetPasswordPage() {
   const navigate = useNavigate();
   const [verification, setVerification] = useState(true);
   const [sessionValide, setSessionValide] = useState(false);
+  const [lienAConfirmer, setLienAConfirmer] = useState<{ tokenHash: string; type: EmailOtpType } | null>(null);
+  const [confirmationEnCours, setConfirmationEnCours] = useState(false);
   const [motDePasse, setMotDePasse] = useState('');
   const [confirmation, setConfirmation] = useState('');
   const [erreur, setErreur] = useState<string | null>(null);
@@ -29,11 +48,40 @@ export function SetPasswordPage() {
   const [succes, setSucces] = useState(false);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tokenHash = params.get('token_hash');
+    const type = params.get('type');
+    if (tokenHash && type) {
+      setLienAConfirmer({ tokenHash, type: type as EmailOtpType });
+      setVerification(false);
+      return;
+    }
+
     supabase.auth.getSession().then(({ data }) => {
       setSessionValide(!!data.session);
       setVerification(false);
     });
   }, []);
+
+  async function confirmerLien() {
+    if (!lienAConfirmer) return;
+    setErreur(null);
+    setConfirmationEnCours(true);
+    const { error } = await supabase.auth.verifyOtp({
+      token_hash: lienAConfirmer.tokenHash,
+      type: lienAConfirmer.type,
+    });
+    setConfirmationEnCours(false);
+
+    if (error) {
+      setErreur("Ce lien d'activation est invalide ou a expiré. Contactez l'administrateur du Service Informatique pour en obtenir un nouveau.");
+      setLienAConfirmer(null);
+      return;
+    }
+
+    setSessionValide(true);
+    setLienAConfirmer(null);
+  }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -65,6 +113,22 @@ export function SetPasswordPage() {
 
   if (verification) {
     return <div className="auth-status">Vérification du lien…</div>;
+  }
+
+  if (lienAConfirmer) {
+    return (
+      <div className="auth-status">
+        <p>
+          Pour activer votre compte, confirmez que c'est bien vous qui ouvrez ce lien
+          (protège contre les scanners de sécurité des messageries qui consomment les liens
+          automatiquement).
+        </p>
+        {erreur && <p className="login-card__erreur">{erreur}</p>}
+        <button type="button" className="btn btn--primary" onClick={confirmerLien} disabled={confirmationEnCours}>
+          {confirmationEnCours ? 'Confirmation…' : 'Confirmer mon adresse'}
+        </button>
+      </div>
+    );
   }
 
   if (!sessionValide) {
