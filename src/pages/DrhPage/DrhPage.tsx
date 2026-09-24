@@ -160,18 +160,13 @@ export function DrhPage() {
     });
   }
 
-  // Jours de congé annuel accordés et défalqués du solde, pour un agent et
-  // une année donnés — même logique que le calcul déjà fait côté
-  // CongeForm/AccueilPage, reprise ici sur les demandes déjà chargées (pas
-  // de requête supplémentaire) pour l'affichage du tableau "Soldes de congé
-  // annuel" (ne compte volontairement pas les missions ici, seulement le
-  // congé annuel lui-même).
+  // Jours accordés et défalqués du solde (congé annuel + missions
+  // défalquées), pour un agent et une année donnés — tableau "Soldes de
+  // congé annuel" et report du reliquat. Avant le 24/09/2026 les missions
+  // n'étaient pas comptées ici : le Chef de service/Direction/DRH voyaient
+  // un solde plus élevé que celui affiché à l'agent sur son tableau de bord.
   function consommeAnnee(agentId: string, annee: number): number {
-    return demandes
-      .filter((d) => d.agent_id === agentId && d.type === 'annuel' && d.statut === 'Accordé' && d.defalque_solde)
-      .flatMap((d) => d.fractions.map((f) => ({ jours: d.jours / Math.max(d.fractions.length, 1), annee: f.debut.slice(0, 4) })))
-      .filter((f) => f.annee === String(annee))
-      .reduce((somme, f) => somme + f.jours, 0);
+    return joursConsommes(agentId, annee, demandes, missionsAccordees);
   }
 
   // Solde réellement disponible pour un agent à l'instant présent (congé
