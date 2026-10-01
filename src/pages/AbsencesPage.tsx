@@ -60,7 +60,12 @@ export function AbsencesPage() {
 
     const charger = async () => {
       const [agentsRes, congesRes, missionsRes] = await Promise.all([
-        supabase.from('agents').select('id, nom, prenom, service_id').eq('statut', 'Actif').order('nom'),
+        supabase
+          .from('agents')
+          .select('id, nom, prenom, service_id')
+          .eq('statut', 'Actif')
+          .neq('role', 'Administrateur')
+          .order('nom'),
         supabase
           .from('demandes_conge')
           .select('agent_id, type, fractions:conge_fractions(debut, fin)')
@@ -87,7 +92,8 @@ export function AbsencesPage() {
       // chef par service technique) — voit tout le monde, comme
       // DRH/Direction/Administrateur (11/09/2026, clarification du
       // commanditaire ; le filtrage "son équipe" du 10/09 n'avait plus lieu
-      // d'être).
+      // d'être). L'Administrateur lui-même (profil technique) n'apparaît
+      // plus dans la liste des agents (01/10/2026).
       setAgents((agentsRes.data as unknown as AgentLite[]) ?? []);
 
       const parAgent = new Map<string, Plage[]>();

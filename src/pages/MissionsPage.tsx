@@ -99,7 +99,10 @@ export function MissionsPage() {
         .from('missions_pour_personnel')
         .select('id, ref, agent_id, destination, debut, fin, jours, motif, remplacant_nom, statut, defalque_solde')
         .order('debut', { ascending: false }),
-      supabase.from('agents').select('id, nom, prenom, service_id, solde_report, service:services(nom)'),
+      supabase
+        .from('agents')
+        .select('id, nom, prenom, service_id, solde_report, service:services(nom)')
+        .neq('role', 'Administrateur'),
       // Congés annuels défalqués déjà accordés — nécessaires pour calculer
       // le solde disponible d'un agent avant d'autoriser la défalcation
       // d'une mission (voir `disponiblePourAgent` ci-dessous).

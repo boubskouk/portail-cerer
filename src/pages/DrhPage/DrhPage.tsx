@@ -231,11 +231,16 @@ export function DrhPage() {
           'id, ref, agent_id, type, jours, statut, defalque_solde, solde_depasse, remplacant_nom, created_at, decide_le, certificat_url, agent:agents!agent_id(nom, prenom, role, service_id, service:services(nom)), fractions:conge_fractions(debut, fin)',
         )
         .order('created_at', { ascending: false }),
-      supabase.from('agents').select('id', { count: 'exact', head: true }).eq('statut', 'Actif'),
+      supabase
+        .from('agents')
+        .select('id', { count: 'exact', head: true })
+        .eq('statut', 'Actif')
+        .neq('role', 'Administrateur'),
       supabase
         .from('agents')
         .select('id, nom, prenom, solde_report, service:services(nom)')
         .eq('statut', 'Actif')
+        .neq('role', 'Administrateur')
         .order('nom'),
       // Missions défalquées déjà accordées — nécessaires pour calculer le
       // solde réellement disponible d'un agent avant d'accorder un congé

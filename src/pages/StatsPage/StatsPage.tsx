@@ -67,7 +67,7 @@ export function StatsPage() {
 
   useEffect(() => {
     Promise.all([
-      supabase.from('agents').select('id, role, statut, service:services(nom)'),
+      supabase.from('agents').select('id, role, statut, service:services(nom)').neq('role', 'Administrateur'),
       supabase
         .from('demandes_conge')
         .select('agent_id, type, statut, jours, fractions:conge_fractions(debut)'),

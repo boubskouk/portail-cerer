@@ -17,7 +17,8 @@ function initiales(nom: string, prenom: string): string {
 
 // Annuaire du personnel (§5.5 du README de handoff). Branché sur Supabase le
 // 10/09/2026 : lecture ouverte à tout compte connecté (`agents`, RLS
-// `agents_select`). Seuls les comptes Actifs sont listés.
+// `agents_select`). Seuls les comptes Actifs sont listés. L'Administrateur
+// (profil technique, pas un membre du personnel) est exclu (01/10/2026).
 export function AnnuairePage() {
   const [agents, setAgents] = useState<AgentAnnuaire[]>([]);
   const [services, setServices] = useState<string[]>([]);
@@ -31,6 +32,7 @@ export function AnnuairePage() {
         .from('agents')
         .select('id, nom, prenom, poste, telephone, service:services(nom)')
         .eq('statut', 'Actif')
+        .neq('role', 'Administrateur')
         .order('nom'),
       supabase.from('services').select('nom').order('nom'),
     ])
