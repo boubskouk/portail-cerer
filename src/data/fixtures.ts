@@ -1,7 +1,7 @@
 // Données fictives (fixtures) — reprises du prototype `Portail CERER.dc.html`
 // pour la mise en page uniquement. À remplacer par des appels d'API en
 // production (voir §11 du README de handoff).
-import type { CompteUtilisateur, DemandeAcces, Statut } from '../types';
+import type { CompteUtilisateur, Statut } from '../types';
 
 export const CURRENT_USER = {
   nom: 'Jacques KOUKOUI',
@@ -38,33 +38,8 @@ export const AGENTS: Agent[] = [
   { nom: 'KOUKOUI Jacques', poste: 'Chef du Service Informatique', service: SERVICES[5], telephone: '77 512 34 08' },
 ];
 
-export interface DemandeConge {
-  ref: string;
-  agent: string;
-  service: string;
-  type: string;
-  jours: number;
-  periode: string;
-  statut: Statut;
-}
-
-// Compteur « en attente » de la barre latérale (Demandes de congé /
-// Validations) — dérivé de cette liste, comme dans le prototype.
-export const DEMANDES: DemandeConge[] = [
-  { ref: 'CERER/RH/012/2026', agent: 'DIALLO Amadou', service: 'Solaire photovoltaïque', type: 'Congé annuel', jours: 10, periode: '14/09 → 25/09', statut: 'En attente' },
-  { ref: 'CERER/RH/011/2026', agent: 'NDIAYE Fatou', service: 'Service Informatique', type: 'Maladie', jours: 5, periode: '07/09 → 11/09', statut: 'En attente' },
-  { ref: 'CERER/RH/010/2026', agent: 'SARR Moussa', service: 'Biomasse & biocarburants', type: 'Exceptionnel', jours: 3, periode: '02/09 → 04/09', statut: 'Validé chef' },
-  { ref: 'CERER/RH/009/2026', agent: 'BA Aminata', service: 'Administration & Finances', type: 'Maternité', jours: 90, periode: '01/10 → 29/12', statut: 'Accordé' },
-  { ref: 'CERER/RH/008/2026', agent: 'FALL Ibrahima', service: 'Énergie éolienne', type: 'Sans solde', jours: 15, periode: '20/08 → 03/09', statut: 'Refusé' },
-  { ref: 'CERER/RH/007/2026', agent: 'GUEYE Ousmane', service: 'Efficacité énergétique', type: 'Congé annuel', jours: 6, periode: '17/08 → 22/08', statut: 'Accordé' },
-];
-
-export function countEnAttente(demandes: DemandeConge[] = DEMANDES): number {
-  return demandes.filter((d) => d.statut === 'En attente' || d.statut === 'Validé chef').length;
-}
-
-// Indicateurs statiques de l'écran DRH (§5.4) — non dérivés de `DEMANDES`
-// dans le prototype, conservés tels quels.
+// Indicateurs statiques de l'écran DRH (§5.4), conservés tels quels du
+// prototype — non dérivés des demandes de congé réelles.
 export const DRH_KPIS_STATIQUES = {
   ceMois: '23 j',
   agentsEnConge: 4,
@@ -219,55 +194,6 @@ export const MATERIEL_DEMANDES: DemandeMateriel[] = [
 ];
 
 // --- Comptes et accès (profil Administrateur) -------------------------------
-
-export const DEMANDES_ACCES: DemandeAcces[] = [
-  {
-    id: 'da-1',
-    nom: 'DIOP',
-    prenom: 'Aïssatou',
-    matricule: 'CERER-0198',
-    poste: 'Assistante de recherche',
-    service: SERVICES[2],
-    telephone: '76 402 18 55',
-    email: 'aissatou.diop@ucad.edu.sn',
-    motif: 'Nouvelle recrue au laboratoire éolien depuis le 1er septembre.',
-    dateDemande: '02/09/2026',
-    role: 'Agent',
-    statut: 'En attente',
-  },
-  {
-    id: 'da-2',
-    nom: 'NIANG',
-    prenom: 'Ousseynou',
-    matricule: 'CERER-0201',
-    poste: 'Responsable adjoint biomasse',
-    service: SERVICES[1],
-    telephone: '77 233 40 12',
-    email: 'ousseynou.niang@ucad.edu.sn',
-    motif: 'Prise de fonction en remplacement de SARR Moussa, en attente de délégation de validation.',
-    dateDemande: '30/08/2026',
-    role: 'Chef de service',
-    statut: 'En attente',
-  },
-  {
-    id: 'da-3',
-    nom: 'FAYE',
-    prenom: 'Bineta',
-    matricule: 'CERER-0187',
-    poste: 'Stagiaire — efficacité énergétique',
-    service: SERVICES[3],
-    telephone: '70 815 66 29',
-    email: 'bineta.faye@ucad.edu.sn',
-    motif: 'Stage de fin d’études, 6 mois.',
-    dateDemande: '18/08/2026',
-    role: 'Agent',
-    statut: 'Refusé',
-  },
-];
-
-export function countDemandesAccesEnAttente(demandes: DemandeAcces[] = DEMANDES_ACCES): number {
-  return demandes.filter((d) => d.statut === 'En attente').length;
-}
 
 export const COMPTES: CompteUtilisateur[] = [
   { id: 'c-1', nom: 'KOUKOUI', prenom: 'Jacques', service: SERVICES[5], email: 'jacques.koukoui@ucad.edu.sn', role: 'Administrateur', statut: 'Actif' },

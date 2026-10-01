@@ -1,0 +1,34 @@
+pour le portail cerer hub au niveau de la page de connexion mettre en place un systeme qui permet 
+de reinitiliser lui meme son mot de passe(lien mot de passe oublié) 
+il clique sur le le lien et il est ameneé a renseigner son adresse email ucad il le fait et un 
+lien lui sera envoyé sur sa boite email pour reinitiliser son mot de passe avec 2 champs 
+nouveau mot de passe et confirmer mot de passe il le fait et il retrouve son espace 
+
+je voudrai que que le bouton se deconnecter soit mis sous les elements du menu il faudrait repenser
+à un menu depliable à la demande pour optimiser l'espace car il ya des elements peu visible a cause de la bulle flottante de whatsapp
+
+la photo de l'agent doit etre inserer dans son profil les intiales du profil doivent etre cliquable 
+et proposer de mettre a jour sa photo de profil modifier ses informations telephone 
+
+je vois que l'application ne gere que le mois en cours aucune visibilite sur les mois a venir 
+exemple si un ordre de mission ou de conge depasse le mois les jours qui touchent le mois prochain  la ne sont pas visible dans 
+l'application il faudrait faire voir le mois en cours et le mois suivant
+
+sur la page Demande d'accès au portail sur la partie à renseigner a savoir poste/fonction proposer
+un menu deroulant avec les options suivants chef  de service ,drh;directeur;agent et sur l'exemple de l'émail
+Email (@ucad.edu.sn) * cela doit etre en minuscule cest ecrit en dur en majuscule comme exemple d'email à mettre
+
+le menu etant chargé pour certains profils je voudrai que tu mettes place un systeme qui permet de voir tout 
+le menu puis de monter ou de descendre regarde le menu chef de service il ya des elements dans le menu 
+peut visible ajouter au bouton deconnexion qui va venir sy ajouter en bas 
+
+
+dans le dash du chef de service et de la drh  bien explique les cases articles et  suivis et en rupture elles
+sont pas bien faites reogarniser ces 2 DASH de facon a etre plus clair leur partie qui leur incombe et une autre partie pour les taches 
+qui incombent le service 
+
+
+
+une chose a mettre je vois des numeros a cote des elements du menu par exemple validation 3 or ce 3
+ne reflete pas les validations en cours car il yen 0 que je vois fais la mise à jour de ces numeros
+pour que chaque elements du menu puisse refleter exactement le nombre de taches en cours ou à faire 

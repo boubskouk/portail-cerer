@@ -1,6 +1,11 @@
 .app-sidebar {
   width: var(--sidebar-width);
-  padding: 20px 14px 30px;
+  /* Marge basse qui réserve la place de la bulle flottante WhatsApp (fixed,
+     50px de haut + 22px de marge, voir WhatsAppButton.css) : sans ça, les
+     derniers éléments du menu (dont le bouton Se déconnecter) finissent
+     cachés derrière elle, la sidebar étant "sticky" et occupant donc toute
+     la hauteur de la fenêtre sous l'en-tête. */
+  padding: 20px 14px 94px;
   background: var(--color-surface);
   border-right: 1px solid var(--color-border);
   min-height: calc(100vh - var(--header-height));
@@ -18,11 +23,39 @@
 }
 
 .app-sidebar__group-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
   font: 600 10.5px var(--font-body);
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--color-text-muted);
-  padding: 0 10px 8px;
+  padding: 4px 10px 8px;
+}
+
+.app-sidebar__group-title:hover {
+  color: var(--color-text-tertiary);
+}
+
+/* Chevron en CSS pur (bordure pliée) plutôt qu'une icône/police externe —
+   pivote de 90° pour passer de "replié" (pointe vers la droite) à "ouvert"
+   (pointe vers le bas). */
+.app-sidebar__chevron {
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid var(--color-text-muted);
+  border-bottom: 1.5px solid var(--color-text-muted);
+  transform: rotate(45deg);
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.app-sidebar__group-title[aria-expanded='false'] .app-sidebar__chevron {
+  transform: rotate(-45deg);
 }
 
 .app-sidebar__item {
@@ -68,6 +101,23 @@
 
 .app-sidebar__spacer {
   flex: 1;
+}
+
+.app-sidebar__logout {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-top: 1px solid var(--color-border);
+  background: transparent;
+  cursor: pointer;
+  padding: 14px 10px 0;
+  font: 500 13.5px var(--font-body);
+  color: var(--color-text-tertiary);
+}
+
+.app-sidebar__logout:hover {
+  color: var(--color-text);
 }
 
 .app-sidebar__mobile-head {

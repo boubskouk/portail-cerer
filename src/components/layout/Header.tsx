@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import './Header.css';
 import { useAuth } from '../../context/AuthContext';
 import logoCerer from '../../assets/brand/logo-cerer.png';
@@ -18,15 +17,9 @@ type HeaderProps = {
 };
 
 export function Header({ onMenuToggle }: HeaderProps) {
-  const { agent, signOut } = useAuth();
-  const navigate = useNavigate();
+  const { agent } = useAuth();
 
   if (!agent) return null;
-
-  async function handleLogout() {
-    await signOut();
-    navigate('/login', { replace: true });
-  }
 
   return (
     <header className="app-header">
@@ -64,10 +57,6 @@ export function Header({ onMenuToggle }: HeaderProps) {
           </div>
           <div className="app-header__avatar">{initiales(agent.prenom, agent.nom)}</div>
         </div>
-
-        <button type="button" className="app-header__logout" onClick={handleLogout}>
-          Se déconnecter
-        </button>
 
         <div className="app-header__divider" />
 

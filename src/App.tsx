@@ -11,6 +11,7 @@ import { ComptesPage } from './pages/ComptesPage/ComptesPage';
 import { CongeForm } from './pages/CongeForm/CongeForm';
 import { DemandeAccesPage } from './pages/DemandeAccesPage';
 import { DrhPage } from './pages/DrhPage/DrhPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { LoginPage } from './pages/LoginPage';
 import { MaterielPage } from './pages/MaterielPage/MaterielPage';
 import { MissionsPage } from './pages/MissionsPage';
@@ -33,6 +34,7 @@ function AppRoutes() {
       {/* Publiques — hors coquille authentifiée, accessibles sans compte. */}
       <Route path="login" element={<LoginPage />} />
       <Route path="demande-acces" element={<DemandeAccesPage />} />
+      <Route path="mot-de-passe-oublie" element={<ForgotPasswordPage />} />
       <Route path="set-password" element={<SetPasswordPage />} />
 
       <Route element={<RequireAuth />}>

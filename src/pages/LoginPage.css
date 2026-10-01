@@ -223,6 +223,18 @@
   justify-content: flex-end;
 }
 
+.login-card__lien-oubli {
+  align-self: flex-end;
+  margin-top: -8px;
+  font: 400 12.5px var(--font-body);
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+}
+
+.login-card__lien-oubli:hover {
+  text-decoration: underline;
+}
+
 .login-card__lien-acces {
   text-align: center;
   font: 400 12.5px var(--font-body);

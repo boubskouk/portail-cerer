@@ -211,167 +211,197 @@ export function AccueilPage() {
     };
   })();
 
+  // 01/10/2026, demande du commanditaire : le tableau de bord mélangeait,
+  // sans distinction visuelle claire, ce qui relève du Chef de service/DRH
+  // en tant que personne (ses propres congés/missions/matériel) et ce qui
+  // relève de sa fonction de validateur pour tout le service (les demandes
+  // du personnel à traiter) — d'où une confusion sur ce que chaque case
+  // représentait. Regroupé en 2 sections explicitement titrées ci-dessous ;
+  // inchangé pour Agent/Direction, qui n'ont qu'une seule de ces 2
+  // catégories (pas de section "service" à distinguer pour eux).
+  const estValidateur = role === 'Chef de service' || role === 'DRH';
+
   return (
     <div className="accueil">
-      {(role === 'Chef de service' || role === 'DRH') && aTraiter && (
-        <div className="card accueil__a-traiter">
-          <div className="accueil__card-title">
-            {role === 'Chef de service' ? 'À traiter — tout le personnel' : 'Mes validations à traiter'}
+      {estValidateur && aTraiter && (
+        <section className="accueil__section">
+          <div className="accueil__section-header">
+            <h2 className="accueil__section-title">Ce qui revient au service</h2>
+            <p className="accueil__section-sous">
+              Demandes de l'équipe en attente de votre décision — pas les vôtres, qui sont plus bas dans « Mon
+              espace ».
+            </p>
           </div>
-          <div className="accueil__a-traiter-grid">
-            <button type="button" className="accueil__a-traiter-item" onClick={() => navigate('/drh')}>
-              <span className="accueil__big-number">{aTraiter.conges}</span>
-              <span className="accueil__muted-text">Congés en attente</span>
-            </button>
-            {/* La DRH suit les ordres de mission mais ne les valide jamais
-                (voir commentaire ci-dessus) — cette case reste réservée au
-                Chef de service, seul avec l'Administrateur à en décider. */}
-            {role === 'Chef de service' && (
-              <button type="button" className="accueil__a-traiter-item" onClick={() => navigate('/missions')}>
-                <span className="accueil__big-number">{aTraiter.missions}</span>
-                <span className="accueil__muted-text">Ordres de mission en attente</span>
+          <div className="card accueil__a-traiter">
+            <div className="accueil__card-title">
+              {role === 'Chef de service'
+                ? 'Demandes de tout le personnel, tous services confondus'
+                : 'Vos validations RH (vos propres demandes en sont exclues)'}
+            </div>
+            <div className="accueil__a-traiter-grid">
+              <button type="button" className="accueil__a-traiter-item" onClick={() => navigate('/drh')}>
+                <span className="accueil__big-number">{aTraiter.conges}</span>
+                <span className="accueil__muted-text">Congés en attente</span>
               </button>
-            )}
-            <button type="button" className="accueil__a-traiter-item" onClick={() => navigate('/materiel')}>
-              <span className="accueil__big-number">{aTraiter.materiel}</span>
-              <span className="accueil__muted-text">Demandes matériel en attente</span>
-            </button>
+              {/* La DRH suit les ordres de mission mais ne les valide jamais
+                  (voir commentaire ci-dessus) — cette case reste réservée au
+                  Chef de service, seul avec l'Administrateur à en décider. */}
+              {role === 'Chef de service' && (
+                <button type="button" className="accueil__a-traiter-item" onClick={() => navigate('/missions')}>
+                  <span className="accueil__big-number">{aTraiter.missions}</span>
+                  <span className="accueil__muted-text">Ordres de mission en attente</span>
+                </button>
+              )}
+              <button type="button" className="accueil__a-traiter-item" onClick={() => navigate('/materiel')}>
+                <span className="accueil__big-number">{aTraiter.materiel}</span>
+                <span className="accueil__muted-text">Demandes matériel en attente</span>
+              </button>
+            </div>
           </div>
-        </div>
+        </section>
       )}
 
-      <div className="accueil__stats">
-        <div className="card">
-          <div className="card-label" style={{ marginBottom: 12 }}>
-            Solde de congé annuel
+      <section className="accueil__section">
+        {estValidateur && (
+          <div className="accueil__section-header">
+            <h2 className="accueil__section-title">Mon espace</h2>
+            <p className="accueil__section-sous">Vos propres congés, missions et demandes de matériel.</p>
           </div>
-          <div className="accueil__solde-value">
-            <span className="accueil__solde-number">{soldeRestant}</span>
-            <span className="accueil__solde-total">/ {soldeTotal} jours restants</span>
-          </div>
-          <div className="accueil__solde-track">
-            <div className="accueil__solde-fill" style={{ width: `${soldePct}%` }} />
-          </div>
-          <div className="accueil__solde-note">
-            {soldeConsomme} jours consommés en {ANNEE_EN_COURS}
-          </div>
-        </div>
+        )}
 
-        <div className="card">
-          <div className="card-label" style={{ marginBottom: 12 }}>
-            Demandes en cours
-          </div>
-          <div className="accueil__big-number">{totalEnCours}</div>
-          <div className="accueil__muted-text">
-            {repartitionEnCours.length === 0 ? 'Aucune demande en attente' : repartitionEnCours.join(' · ')}
-          </div>
-        </div>
-
-        <div className="card">
-          <div className="card-label" style={{ marginBottom: 12 }}>
-            Prochaine absence
-          </div>
-          {prochaineAbsence ? (
-            <>
-              <div className="accueil__mid-number">{prochaineAbsence.periode}</div>
-              <div className="accueil__muted-text">
-                {prochaineAbsence.detail}
-                {prochaineAbsence.remplacant && (
-                  <>
-                    <br />
-                    Remplaçant : {prochaineAbsence.remplacant}
-                  </>
-                )}
-              </div>
-            </>
-          ) : (
-            <div className="accueil__muted-text">Aucune absence prévue.</div>
-          )}
-        </div>
-      </div>
-
-      <div className="accueil__lower">
-        <div className="card">
-          <div className="accueil__card-title">Mes demandes récentes</div>
-          {chargement && <div className="accueil__muted-text">Chargement…</div>}
-          {!chargement && demandes.length === 0 && (
-            <div className="accueil__muted-text">Aucune demande de congé pour l’instant.</div>
-          )}
-          {demandes.slice(0, 5).map((d) => (
-            <div className="accueil__demande-row" key={d.id}>
-              <div>
-                <div className="accueil__demande-type">{libelleTypeConge(d.type)}</div>
-                <div className="accueil__demande-meta">
-                  {d.ref} · {periodeFractions(d.fractions)} · {d.jours} j
-                </div>
-              </div>
-              <StatusPill statut={d.statut} />
+        <div className="accueil__stats">
+          <div className="card">
+            <div className="card-label" style={{ marginBottom: 12 }}>
+              Solde de congé annuel
             </div>
-          ))}
+            <div className="accueil__solde-value">
+              <span className="accueil__solde-number">{soldeRestant}</span>
+              <span className="accueil__solde-total">/ {soldeTotal} jours restants</span>
+            </div>
+            <div className="accueil__solde-track">
+              <div className="accueil__solde-fill" style={{ width: `${soldePct}%` }} />
+            </div>
+            <div className="accueil__solde-note">
+              {soldeConsomme} jours consommés en {ANNEE_EN_COURS}
+            </div>
+          </div>
+
+          <div className="card">
+            <div className="card-label" style={{ marginBottom: 12 }}>
+              Demandes en cours
+            </div>
+            <div className="accueil__big-number">{totalEnCours}</div>
+            <div className="accueil__muted-text">
+              {repartitionEnCours.length === 0 ? 'Aucune demande en attente' : repartitionEnCours.join(' · ')}
+            </div>
+          </div>
+
+          <div className="card">
+            <div className="card-label" style={{ marginBottom: 12 }}>
+              Prochaine absence
+            </div>
+            {prochaineAbsence ? (
+              <>
+                <div className="accueil__mid-number">{prochaineAbsence.periode}</div>
+                <div className="accueil__muted-text">
+                  {prochaineAbsence.detail}
+                  {prochaineAbsence.remplacant && (
+                    <>
+                      <br />
+                      Remplaçant : {prochaineAbsence.remplacant}
+                    </>
+                  )}
+                </div>
+              </>
+            ) : (
+              <div className="accueil__muted-text">Aucune absence prévue.</div>
+            )}
+          </div>
         </div>
 
-        <div className="card">
-          <div className="accueil__card-title">Mes ordres de mission</div>
-          {chargement && <div className="accueil__muted-text">Chargement…</div>}
-          {!chargement && missions.length === 0 && (
-            <div className="accueil__muted-text">Aucun ordre de mission pour l’instant.</div>
-          )}
-          {missions.slice(0, 5).map((m) => (
-            <div className="accueil__demande-row" key={m.id}>
-              <div>
-                <div className="accueil__demande-type">
-                  {m.destination ?? <em>Mission (destination réservée à la CSA/DRH/Direction)</em>}
-                </div>
-                <div className="accueil__demande-meta">
-                  {m.ref} · {toFr(m.debut)} → {toFr(m.fin)} · {m.jours} j
-                </div>
-                {m.statut === 'Accordé' && m.defalque_solde && (
-                  <div className="accueil__demande-defalque">
-                    {m.jours} jour{m.jours > 1 ? 's' : ''} de mission défalqué{m.jours > 1 ? 's' : ''} de vos congés
+        <div className="accueil__lower">
+          <div className="card">
+            <div className="accueil__card-title">Mes demandes récentes</div>
+            {chargement && <div className="accueil__muted-text">Chargement…</div>}
+            {!chargement && demandes.length === 0 && (
+              <div className="accueil__muted-text">Aucune demande de congé pour l’instant.</div>
+            )}
+            {demandes.slice(0, 5).map((d) => (
+              <div className="accueil__demande-row" key={d.id}>
+                <div>
+                  <div className="accueil__demande-type">{libelleTypeConge(d.type)}</div>
+                  <div className="accueil__demande-meta">
+                    {d.ref} · {periodeFractions(d.fractions)} · {d.jours} j
                   </div>
-                )}
-              </div>
-              <StatusPill statut={m.statut} />
-            </div>
-          ))}
-        </div>
-
-        <div className="card">
-          <div className="accueil__card-title">Mes demandes de matériel</div>
-          {chargement && <div className="accueil__muted-text">Chargement…</div>}
-          {!chargement && materiel.length === 0 && (
-            <div className="accueil__muted-text">Aucune demande de matériel pour l’instant.</div>
-          )}
-          {materiel.slice(0, 5).map((m) => (
-            <div className="accueil__demande-row" key={m.id}>
-              <div>
-                <div className="accueil__demande-type">{m.article}</div>
-                <div className="accueil__demande-meta">
-                  {m.ref} · qté {m.qte} · {toFr(m.created_at.slice(0, 10))}
                 </div>
+                <StatusPill statut={d.statut} />
               </div>
-              <StatusPill statut={m.statut} />
-            </div>
-          ))}
-        </div>
-
-        <div className="card">
-          <div className="accueil__card-title">Raccourcis</div>
-          <div className="accueil__raccourcis">
-            {RACCOURCIS.map((r) => (
-              <button
-                key={r.label}
-                type="button"
-                className="accueil__raccourci"
-                onClick={() => navigate(`/${r.to}`)}
-              >
-                <span className="accueil__raccourci-label">{r.label}</span>
-                <span className="accueil__raccourci-sous">{r.sous}</span>
-              </button>
             ))}
           </div>
+
+          <div className="card">
+            <div className="accueil__card-title">Mes ordres de mission</div>
+            {chargement && <div className="accueil__muted-text">Chargement…</div>}
+            {!chargement && missions.length === 0 && (
+              <div className="accueil__muted-text">Aucun ordre de mission pour l’instant.</div>
+            )}
+            {missions.slice(0, 5).map((m) => (
+              <div className="accueil__demande-row" key={m.id}>
+                <div>
+                  <div className="accueil__demande-type">
+                    {m.destination ?? <em>Mission (destination réservée à la CSA/DRH/Direction)</em>}
+                  </div>
+                  <div className="accueil__demande-meta">
+                    {m.ref} · {toFr(m.debut)} → {toFr(m.fin)} · {m.jours} j
+                  </div>
+                  {m.statut === 'Accordé' && m.defalque_solde && (
+                    <div className="accueil__demande-defalque">
+                      {m.jours} jour{m.jours > 1 ? 's' : ''} de mission défalqué{m.jours > 1 ? 's' : ''} de vos congés
+                    </div>
+                  )}
+                </div>
+                <StatusPill statut={m.statut} />
+              </div>
+            ))}
+          </div>
+
+          <div className="card">
+            <div className="accueil__card-title">Mes demandes de matériel</div>
+            {chargement && <div className="accueil__muted-text">Chargement…</div>}
+            {!chargement && materiel.length === 0 && (
+              <div className="accueil__muted-text">Aucune demande de matériel pour l’instant.</div>
+            )}
+            {materiel.slice(0, 5).map((m) => (
+              <div className="accueil__demande-row" key={m.id}>
+                <div>
+                  <div className="accueil__demande-type">{m.article}</div>
+                  <div className="accueil__demande-meta">
+                    {m.ref} · qté {m.qte} · {toFr(m.created_at.slice(0, 10))}
+                  </div>
+                </div>
+                <StatusPill statut={m.statut} />
+              </div>
+            ))}
+          </div>
+
+          <div className="card">
+            <div className="accueil__card-title">Raccourcis</div>
+            <div className="accueil__raccourcis">
+              {RACCOURCIS.map((r) => (
+                <button
+                  key={r.label}
+                  type="button"
+                  className="accueil__raccourci"
+                  onClick={() => navigate(`/${r.to}`)}
+                >
+                  <span className="accueil__raccourci-label">{r.label}</span>
+                  <span className="accueil__raccourci-sous">{r.sous}</span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

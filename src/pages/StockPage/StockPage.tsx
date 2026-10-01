@@ -154,6 +154,14 @@ export function StockPage() {
   // confondre ça avec une vraie Sortie (livraison).
   const [rechercheStock, setRechercheStock] = useState('');
   const [filtreCategorieStock, setFiltreCategorieStock] = useState('Toutes');
+  // 01/10/2026, demande du commanditaire : les cases "Articles suivis"/"En
+  // rupture" étaient de simples chiffres sans explication, dont le
+  // fonctionnement n'était pas clair (que comptent-elles au juste ?).
+  // Rendues cliquables : "En rupture" filtre directement le tableau
+  // ci-dessous sur les articles concernés, "Articles suivis" revient à la
+  // vue complète — leur rôle se comprend en les utilisant, pas seulement en
+  // les lisant.
+  const [filtreRuptureSeulement, setFiltreRuptureSeulement] = useState(false);
   const [ligneEnEdition, setLigneEnEdition] = useState<string | null>(null);
   const [editionNom, setEditionNom] = useState('');
   const [editionCategorie, setEditionCategorie] = useState('');
@@ -542,7 +550,8 @@ export function StockPage() {
     const q = rechercheStock.trim().toLowerCase();
     const matchRecherche = !q || a.nom.toLowerCase().includes(q);
     const matchCategorie = filtreCategorieStock === 'Toutes' || a.categorie === filtreCategorieStock;
-    return matchRecherche && matchCategorie;
+    const matchRupture = !filtreRuptureSeulement || a.stock_restant <= 0;
+    return matchRecherche && matchCategorie && matchRupture;
   });
 
   // Export combiné (15/09/2026, demande du commanditaire) : état du stock
@@ -603,16 +612,33 @@ export function StockPage() {
       </div>
 
       <div className="comptes-page__kpis">
-        <div className="kpi-card">
+        <button
+          type="button"
+          className={`kpi-card kpi-card--clickable ${!filtreRuptureSeulement ? 'is-active' : ''}`}
+          onClick={() => setFiltreRuptureSeulement(false)}
+          aria-pressed={!filtreRuptureSeulement}
+        >
           <div className="card-label">Articles suivis</div>
           <div className="kpi-card__value">{etatStock.length}</div>
-          <div className="kpi-card__sous">au catalogue</div>
-        </div>
-        <div className="kpi-card">
+          <div className="kpi-card__sous">
+            Articles différents référencés au catalogue — pas la quantité en stock. Cliquez pour voir le tableau
+            complet.
+          </div>
+        </button>
+        <button
+          type="button"
+          className={`kpi-card kpi-card--clickable ${filtreRuptureSeulement ? 'is-active' : ''}`}
+          onClick={() => setFiltreRuptureSeulement(true)}
+          aria-pressed={filtreRuptureSeulement}
+        >
           <div className="card-label">En rupture</div>
           <div className="kpi-card__value">{totalRupture}</div>
-          <div className="kpi-card__sous">stock restant ≤ 0</div>
-        </div>
+          <div className="kpi-card__sous">
+            {totalRupture === 0
+              ? 'Aucun article à stock restant nul ou négatif — rien à réapprovisionner en urgence.'
+              : 'Stock restant nul ou négatif. Cliquez pour les isoler dans le tableau ci-dessous.'}
+          </div>
+        </button>
         <div className="kpi-card">
           <div className="card-label">Livraisons (période)</div>
           <div className="kpi-card__value">{livraisons.length}</div>
@@ -757,7 +783,9 @@ export function StockPage() {
 
       <div className="data-table">
         <div className="data-table__toolbar">
-          <div className="data-table__title">État du stock</div>
+          <div className="data-table__title">
+            État du stock{filtreRuptureSeulement ? ' — en rupture uniquement' : ''}
+          </div>
           <input
             className="search-input"
             placeholder="Rechercher un article…"

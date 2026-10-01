@@ -4,6 +4,38 @@
   gap: 16px;
 }
 
+/* 01/10/2026, demande du commanditaire : séparation visuelle explicite entre
+   "ce qui revient au service" (validations de l'équipe) et "Mon espace" (les
+   propres demandes du Chef de service/DRH) — un simple filet au-dessus de la
+   2e section suffit, pas besoin d'une carte englobante en plus des cartes
+   déjà présentes à l'intérieur. */
+.accueil__section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.accueil__section + .accueil__section {
+  padding-top: 18px;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.accueil__section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.accueil__section-title {
+  font: 700 14.5px var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.accueil__section-sous {
+  font: 400 12.5px/1.4 var(--font-body);
+  color: var(--color-text-tertiary);
+}
+
 .accueil__stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));

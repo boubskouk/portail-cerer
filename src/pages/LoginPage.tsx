@@ -109,6 +109,10 @@ export function LoginPage() {
             </Field>
           </div>
 
+          <a className="login-card__lien-oubli" href="/mot-de-passe-oublie">
+            Mot de passe oublié ?
+          </a>
+
           {erreur && <div className="login-card__erreur">{erreur}</div>}
 
           <div className="login-card__submit">

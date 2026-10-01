@@ -179,22 +179,6 @@
   flex-shrink: 0;
 }
 
-.app-header__logout {
-  font: 500 12px var(--font-body);
-  color: var(--color-text-tertiary);
-  background: none;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 7px 12px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.app-header__logout:hover {
-  color: var(--color-text);
-  border-color: var(--color-text-tertiary);
-}
-
 .app-header__divider {
   width: 1px;
   height: 28px;
@@ -230,9 +214,6 @@
 @media (max-width: 480px) {
   .app-header__identity-text {
     display: none;
-  }
-  .app-header__logout {
-    padding: 7px 9px;
   }
   .app-header__divider {
     display: none;

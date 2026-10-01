@@ -40,6 +40,7 @@ export function SetPasswordPage() {
   const [verification, setVerification] = useState(true);
   const [sessionValide, setSessionValide] = useState(false);
   const [lienAConfirmer, setLienAConfirmer] = useState<{ tokenHash: string; type: EmailOtpType } | null>(null);
+  const [typeLien, setTypeLien] = useState<EmailOtpType | null>(null);
   const [confirmationEnCours, setConfirmationEnCours] = useState(false);
   const [motDePasse, setMotDePasse] = useState('');
   const [confirmation, setConfirmation] = useState('');
@@ -53,15 +54,24 @@ export function SetPasswordPage() {
     const type = params.get('type');
     if (tokenHash && type) {
       setLienAConfirmer({ tokenHash, type: type as EmailOtpType });
+      setTypeLien(type as EmailOtpType);
       setVerification(false);
       return;
     }
+
+    // Ancien format de lien en secours (#access_token=...&type=...) : le type
+    // y figure aussi, pour adapter le texte ci-dessous (activation/récupération).
+    const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+    const hashType = hashParams.get('type');
+    if (hashType) setTypeLien(hashType as EmailOtpType);
 
     supabase.auth.getSession().then(({ data }) => {
       setSessionValide(!!data.session);
       setVerification(false);
     });
   }, []);
+
+  const estRecuperation = typeLien === 'recovery';
 
   async function confirmerLien() {
     if (!lienAConfirmer) return;
@@ -74,7 +84,7 @@ export function SetPasswordPage() {
     setConfirmationEnCours(false);
 
     if (error) {
-      setErreur("Ce lien d'activation est invalide ou a expiré. Contactez l'administrateur du Service Informatique pour en obtenir un nouveau.");
+      setErreur('Ce lien est invalide ou a expiré. Contactez l\'administrateur du Service Informatique pour en obtenir un nouveau.');
       setLienAConfirmer(null);
       return;
     }
@@ -101,8 +111,13 @@ export function SetPasswordPage() {
     setEnvoi(false);
 
     if (error) {
+      console.error('Erreur updateUser (mot de passe) :', error);
       setErreur(
-        "Impossible de définir le mot de passe. Redemandez un lien à l'administrateur si le problème persiste.",
+        error.message === 'New password should be different from the old password.'
+          ? 'Le nouveau mot de passe doit être différent de l\'ancien.'
+          : estRecuperation
+            ? 'Impossible de réinitialiser le mot de passe. Redemandez un lien si le problème persiste.'
+            : "Impossible de définir le mot de passe. Redemandez un lien à l'administrateur si le problème persiste.",
       );
       return;
     }
@@ -119,7 +134,9 @@ export function SetPasswordPage() {
     return (
       <div className="auth-status">
         <p>
-          Pour activer votre compte, confirmez que c'est bien vous qui ouvrez ce lien
+          {estRecuperation
+            ? 'Pour réinitialiser votre mot de passe, confirmez que c\'est bien vous qui ouvrez ce lien'
+            : "Pour activer votre compte, confirmez que c'est bien vous qui ouvrez ce lien"}{' '}
           (protège contre les scanners de sécurité des messageries qui consomment les liens
           automatiquement).
         </p>
@@ -134,8 +151,8 @@ export function SetPasswordPage() {
   if (!sessionValide) {
     return (
       <div className="auth-status">
-        Ce lien d'activation est invalide ou a expiré. Contactez l'administrateur du
-        Service Informatique pour en obtenir un nouveau.
+        Ce lien est invalide ou a expiré. Contactez l'administrateur du Service
+        Informatique pour en obtenir un nouveau.
       </div>
     );
   }
@@ -166,16 +183,22 @@ export function SetPasswordPage() {
         {succes ? (
           <div className="login-card card">
             <div className="login-card__heading">
-              <h1 className="login-card__h1">Mot de passe défini</h1>
+              <h1 className="login-card__h1">
+                {estRecuperation ? 'Mot de passe réinitialisé' : 'Mot de passe défini'}
+              </h1>
               <p className="login-card__lead">Redirection vers votre espace…</p>
             </div>
           </div>
         ) : (
           <form className="login-card card" onSubmit={onSubmit}>
             <div className="login-card__heading">
-              <h1 className="login-card__h1">Bienvenue sur le portail CERER</h1>
+              <h1 className="login-card__h1">
+                {estRecuperation ? 'Réinitialiser le mot de passe' : 'Bienvenue sur le portail CERER'}
+              </h1>
               <p className="login-card__lead">
-                Votre compte a été créé. Choisissez un mot de passe pour l'activer.
+                {estRecuperation
+                  ? 'Choisissez un nouveau mot de passe pour votre compte.'
+                  : "Votre compte a été créé. Choisissez un mot de passe pour l'activer."}
               </p>
             </div>
 
@@ -206,7 +229,7 @@ export function SetPasswordPage() {
 
             <div className="login-card__submit">
               <button type="submit" className="btn btn--primary" disabled={envoi}>
-                {envoi ? 'Enregistrement…' : 'Activer mon compte'}
+                {envoi ? 'Enregistrement…' : estRecuperation ? 'Réinitialiser mon mot de passe' : 'Activer mon compte'}
               </button>
             </div>
           </form>

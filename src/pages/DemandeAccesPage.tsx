@@ -20,11 +20,18 @@ interface ServiceOption {
   nom: string;
 }
 
+// 01/10/2026, demande du commanditaire : "Poste / fonction" était un champ
+// texte libre — remplacé par ce menu déroulant fermé. N'affecte que le champ
+// `poste` (descriptif, affiché à l'Administrateur dans ComptesPage) ; le rôle
+// réellement attribué au compte reste `role_propose`, toujours ajustable par
+// l'Administrateur avant approbation (voir ComptesPage.tsx), inchangé ici.
+const POSTES_PROPOSES = ['Agent', 'Chef de service', 'DRH', 'Directeur'] as const;
+
 const EMPTY_FORM = {
   nom: '',
   prenom: '',
   matricule: '',
-  poste: '',
+  poste: POSTES_PROPOSES[0] as string,
   serviceId: '',
   telephone: '',
   email: '',
@@ -164,7 +171,13 @@ export function DemandeAccesPage() {
                 <input value={form.matricule} onChange={(e) => set('matricule', e.target.value)} />
               </Field>
               <Field label="Poste / fonction">
-                <input value={form.poste} onChange={(e) => set('poste', e.target.value)} />
+                <select value={form.poste} onChange={(e) => set('poste', e.target.value)}>
+                  {POSTES_PROPOSES.map((p) => (
+                    <option key={p} value={p}>
+                      {p}
+                    </option>
+                  ))}
+                </select>
               </Field>
               <Field label="Service">
                 <select value={form.serviceId} onChange={(e) => set('serviceId', e.target.value)}>
@@ -178,7 +191,16 @@ export function DemandeAccesPage() {
               <Field label="Téléphone" required error={errors.telephone}>
                 <input value={form.telephone} onChange={(e) => set('telephone', e.target.value)} />
               </Field>
-              <Field label="Email (@ucad.edu.sn)" required error={errors.email} span={2}>
+              <Field
+                label={
+                  <>
+                    Email (<span className="field__label-minuscule">@ucad.edu.sn</span>)
+                  </>
+                }
+                required
+                error={errors.email}
+                span={2}
+              >
                 <input
                   type="email"
                   placeholder="prenom.nom@ucad.edu.sn"

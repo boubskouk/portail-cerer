@@ -33,6 +33,14 @@
   color: var(--color-orange);
 }
 
+/* 01/10/2026, demande du commanditaire : un domaine email ("@ucad.edu.sn")
+   affiché en MAJUSCULES dans un libellé de champ ressemble à une exigence de
+   saisie en majuscules — repasse explicitement en minuscules, en écart
+   assumé à l'uppercase générale de .field__label ci-dessus. */
+.field__label-minuscule {
+  text-transform: lowercase;
+}
+
 .field__error {
   font: 500 12px var(--font-body);
   color: var(--color-red);
@@ -203,6 +211,28 @@
   font: 400 12px var(--font-body);
   color: var(--color-text-tertiary);
   margin-top: 6px;
+}
+
+/* Variante cliquable (ex. filtre "En rupture" de StockPage) : même carte,
+   mais en <button> — on neutralise les styles par défaut du bouton puis on
+   ajoute un retour visuel clair sur l'état actif. */
+.kpi-card--clickable {
+  display: block;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kpi-card--clickable:hover {
+  border-color: var(--color-text-tertiary);
+}
+
+.kpi-card--clickable.is-active {
+  border-color: var(--color-blue);
+  box-shadow: inset 0 0 0 1px var(--color-blue);
 }
 
 /* Tableau de données (listes DRH / Comptes / Missions…) */
